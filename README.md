@@ -1,7 +1,11 @@
 # Flutter Spotify Clone
 
 <p align="center">
-    <img src="image0.png" width="800"/>
+    <img src="image0.png" width="160"/>
+    <img src="image1.png" width="160"/>
+    <img src="image2.png" width="160"/>
+    <img src="image3.png" width="160"/>
+    <img src="image4.png" width="160"/>
 </p>
 
 This program is to test flutter and dart, testing out a basic Spotify-like UI.

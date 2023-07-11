@@ -1,3 +1,4 @@
+import "package:carousel_slider/carousel_slider.dart";
 import "package:percent_indicator/linear_percent_indicator.dart";
 import "package:flutter/material.dart";
 
@@ -56,9 +57,39 @@ class _SongPageState extends State<SongPage> {
                 child: Column(
                   children: [
                     // song art
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(15.0),
-                      child: Image.asset("lib/assets/images/ego_death.png"),
+                    CarouselSlider(
+                      options: CarouselOptions(
+                        height: 330.0,
+                        viewportFraction: 1,
+                        initialPage: 0,
+                        enableInfiniteScroll: true,
+                        reverse: false,
+                        autoPlay: false,
+                        enlargeCenterPage: true,
+                        scrollDirection: Axis.horizontal,
+                      ),
+                      items: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(15.0),
+                          child: Image.asset("lib/assets/images/ego_death.png"),
+                        ),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(15.0),
+                          child: Image.asset("lib/assets/images/neurotica.png"),
+                        ),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(15.0),
+                          child: Image.asset("lib/assets/images/the_audacity.png"),
+                        ),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(15.0),
+                          child: Image.asset("lib/assets/images/playing_god.png"),
+                        ),
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(15.0),
+                          child: Image.asset("lib/assets/images/chimera.png"),
+                        ),
+                      ],
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
