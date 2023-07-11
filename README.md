@@ -1,6 +1,16 @@
 # Flutter Spotify Clone
 
+<p align="center">
+    <img src="image0.png" width="800"/>
+</p>
+
 This program is to test flutter and dart, testing out a basic Spotify-like UI.
+
+# Fonts
+
+The font used in this program, Big Noodle Titling, is available here:
+
+https://www.dafont.com/bignoodletitling.font
 
 # Contribution 
 
