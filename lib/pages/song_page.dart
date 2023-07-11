@@ -1,6 +1,7 @@
-import "package:carousel_slider/carousel_slider.dart";
 import "package:percent_indicator/linear_percent_indicator.dart";
+import "package:carousel_slider/carousel_slider.dart";
 import "package:flutter/material.dart";
+import "dart:math";
 
 import "../components/neumorphic_box.dart";
 
@@ -12,6 +13,40 @@ class SongPage extends StatefulWidget {
 }
 
 class _SongPageState extends State<SongPage> {
+  int _currentCarouselPage = 0;
+  final Random _random = Random();
+
+  final List<String> artistNames = [
+    "Polyphia", 
+    "Polyphia", 
+    "Polyphia", 
+    "Polyphia", 
+    "Polyphia",
+  ];
+  final List<String> songNames = [
+    "Ego Death", 
+    "Neurotica", 
+    "The Audacity", 
+    "Playing God", 
+    "Chimera",
+  ];
+  final List<int> endTimes = [
+    350, 
+    194, 
+    144, 
+    205, 
+    236,
+  ];
+  List<int> startTimes = [];
+  List<double> progressValues = [];
+
+  @override
+  void initState() {
+    super.initState();
+    startTimes = List.generate(5, (_) => _random.nextInt(150));
+    progressValues = startTimes.map((startTime) => startTime / 300).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -67,6 +102,11 @@ class _SongPageState extends State<SongPage> {
                         autoPlay: false,
                         enlargeCenterPage: true,
                         scrollDirection: Axis.horizontal,
+                        onPageChanged: (index, reason) {
+                          setState(() {
+                            _currentCarouselPage = index;
+                          });
+                        },
                       ),
                       items: [
                         ClipRRect(
@@ -101,7 +141,7 @@ class _SongPageState extends State<SongPage> {
                             children: [
                               // artist name
                               Text(
-                                "Polyphia",
+                                artistNames[_currentCarouselPage],
                                 style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 20.0,
@@ -111,9 +151,9 @@ class _SongPageState extends State<SongPage> {
                               ),
                               const SizedBox(height: 4.0),
                               // song name
-                              const Text(
-                                "Ego Death",
-                                style: TextStyle(
+                              Text(
+                                songNames[_currentCarouselPage],
+                                style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 26.0,
                                   fontFamily: "BigNoodleTitling",
@@ -135,31 +175,31 @@ class _SongPageState extends State<SongPage> {
 
               const SizedBox(height: 40.0),
               
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   // start time
                   Text(
-                    "1:45",
-                    style: TextStyle(
+                    formatTime(startTimes[_currentCarouselPage]),
+                    style: const TextStyle(
                       fontSize: 25.0,
                       fontFamily: "BigNoodleTitling",
                     ),
                   ),
                   // shuffle button
-                  Icon(
+                  const Icon(
                     Icons.shuffle,
                     size: 28.0,
                   ),
                   // repeat button
-                  Icon(
+                  const Icon(
                     Icons.repeat,
                     size: 28.0,
                   ),
                   // end time
                   Text(
-                    "5:50",
-                    style: TextStyle(
+                    formatTime(endTimes[_currentCarouselPage]),
+                    style: const TextStyle(
                       fontSize: 25.0,
                       fontFamily: "BigNoodleTitling",
                     ),
@@ -173,7 +213,7 @@ class _SongPageState extends State<SongPage> {
               NeumorphicBox(
                 child: LinearPercentIndicator(
                   lineHeight: 10,
-                  percent: 0.3,
+                  percent: progressValues[_currentCarouselPage],
                   progressColor: Colors.black,
                   backgroundColor: Colors.transparent,
                   barRadius: const Radius.circular(10.0),
@@ -225,5 +265,10 @@ class _SongPageState extends State<SongPage> {
         ),
       ),
     );
+  }
+  String formatTime(int seconds) {
+    int minutes = seconds ~/ 60;
+    seconds = seconds % 60;
+    return "$minutes:${seconds.toString().padLeft(2, "0")}";
   }
 }

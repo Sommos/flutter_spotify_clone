@@ -1,6 +1,12 @@
 # Flutter Spotify Clone
 
 <p align="center">
+    <img src="video0.gif" alt="animated" width="300"/>
+</p>
+
+<br> 
+
+<p align="center">
     <img src="image0.png" width="160"/>
     <img src="image1.png" width="160"/>
     <img src="image2.png" width="160"/>
