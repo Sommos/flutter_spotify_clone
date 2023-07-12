@@ -44,6 +44,20 @@ class _SongPageState extends State<SongPage> {
     false, 
     false,
   ];
+  List<bool> shuffleStatus = [
+    false, 
+    false,
+    false, 
+    false, 
+    false,
+  ];
+  List<bool> repeatStatus = [
+    false, 
+    false,
+    false, 
+    false, 
+    false,
+  ];
   List<int> startTimes = [];
   List<double> progressValues = [];
   
@@ -58,6 +72,18 @@ class _SongPageState extends State<SongPage> {
   void favorite() {
     setState(() {
       favoriteStatus[_currentCarouselPage] = !favoriteStatus[_currentCarouselPage];
+    });
+  }
+
+  void shuffle() {
+    setState(() {
+      shuffleStatus[_currentCarouselPage] = !shuffleStatus[_currentCarouselPage];
+    });
+  }
+
+  void repeat() {
+    setState(() {
+      repeatStatus[_currentCarouselPage] = !repeatStatus[_currentCarouselPage];
     });
   }
 
@@ -205,14 +231,22 @@ class _SongPageState extends State<SongPage> {
                     ),
                   ),
                   // shuffle button
-                  const Icon(
-                    Icons.shuffle,
-                    size: 28.0,
+                  InkWell(
+                    onTap: shuffle,
+                    child: Icon(
+                      shuffleStatus[_currentCarouselPage] ? Icons.shuffle_on_outlined : Icons.shuffle, 
+                      color: shuffleStatus[_currentCarouselPage] ? Colors.black : Colors.grey[700],
+                      size: 28.0,
+                    ),
                   ),
                   // repeat button
-                  const Icon(
-                    Icons.repeat,
-                    size: 28.0,
+                  InkWell(
+                    onTap: repeat,
+                    child: Icon(
+                      repeatStatus[_currentCarouselPage] ? Icons.repeat_on_outlined : Icons.repeat, 
+                      color: repeatStatus[_currentCarouselPage] ? Colors.black : Colors.grey[700],
+                      size: 28.0,
+                    ),
                   ),
                   // end time
                   Text(
