@@ -15,7 +15,6 @@ class SongPage extends StatefulWidget {
 class _SongPageState extends State<SongPage> {
   int _currentCarouselPage = 0;
   final Random _random = Random();
-
   final List<String> artistNames = [
     "Polyphia", 
     "Polyphia", 
@@ -60,8 +59,8 @@ class _SongPageState extends State<SongPage> {
   ];
   List<int> startTimes = [];
   List<double> progressValues = [];
+  double adjustableProgressValue = 0.0;
   
-
   @override
   void initState() {
     super.initState();
@@ -217,7 +216,7 @@ class _SongPageState extends State<SongPage> {
                 ),
               ),
 
-              const SizedBox(height: 40.0),
+              const SizedBox(height: 30.0),
               
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -259,17 +258,48 @@ class _SongPageState extends State<SongPage> {
                 ],
               ),
               
-              const SizedBox(height: 40.0),
+              const SizedBox(height: 30.0),
 
               // progress bar
               NeumorphicBox(
-                child: LinearPercentIndicator(
-                  lineHeight: 10,
-                  percent: progressValues[_currentCarouselPage],
-                  progressColor: Colors.black,
-                  backgroundColor: Colors.transparent,
-                  barRadius: const Radius.circular(10.0),
+                child: Stack(
+                  children: [
+                    LinearPercentIndicator(
+                      lineHeight: 10,
+                      percent: adjustableProgressValue,
+                      progressColor: Colors.black,
+                      backgroundColor: Colors.transparent,
+                      barRadius: const Radius.circular(10.0),
+                    ),
+                    Positioned.fill(
+                      child: SliderTheme(
+                        data: SliderTheme.of(context).copyWith(
+                          thumbColor: Colors.black,
+                          thumbShape: const RoundSliderThumbShape(
+                            enabledThumbRadius: 2.0,
+                            elevation: 0.0,
+                            pressedElevation: 8.0,
+                          ),
+                          overlayShape: const RoundSliderOverlayShape(
+                            overlayRadius: 8.0,
+                          ),
+                        ),
+                        child: Slider(
+                          value: adjustableProgressValue,
+                          onChanged: (newValue) {
+                            setState(() {
+                              adjustableProgressValue = newValue;
+                              progressValues[_currentCarouselPage] = newValue;
+                            });
+                          },
+                          activeColor: Colors.transparent,
+                          inactiveColor: Colors.transparent,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
+                
               ),
 
               const SizedBox(height: 30.0),
