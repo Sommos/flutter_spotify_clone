@@ -37,14 +37,28 @@ class _SongPageState extends State<SongPage> {
     205, 
     236,
   ];
+  List<bool> favoriteStatus = [
+    false, 
+    false,
+    false, 
+    false, 
+    false,
+  ];
   List<int> startTimes = [];
   List<double> progressValues = [];
+  
 
   @override
   void initState() {
     super.initState();
     startTimes = List.generate(5, (_) => _random.nextInt(150));
     progressValues = startTimes.map((startTime) => startTime / 300).toList();
+  }
+
+  void favorite() {
+    setState(() {
+      favoriteStatus[_currentCarouselPage] = !favoriteStatus[_currentCarouselPage];
+    });
   }
 
   @override
@@ -161,10 +175,14 @@ class _SongPageState extends State<SongPage> {
                               ),
                             ],
                           ),
-                          const Icon(
-                            Icons.favorite, 
-                            color: Colors.red,
-                            size: 40.0,
+                          // favorite button
+                          InkWell(
+                            onTap: favorite,
+                            child: Icon(
+                              favoriteStatus[_currentCarouselPage] ? Icons.favorite : Icons.favorite_border_outlined, 
+                              color: favoriteStatus[_currentCarouselPage] ? Colors.red : Colors.grey[700],
+                              size: 40.0,
+                            ),
                           ),
                         ],
                       ),
