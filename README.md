@@ -14,7 +14,7 @@
     <img src="image4.png" width="160"/>
 </p>
 
-This program is to test flutter and dart, testing out a basic Spotify-like UI.
+This program is to test flutter and dart, testing out a basic Spotify-like UI with neumorphic design.
 
 # Fonts
 

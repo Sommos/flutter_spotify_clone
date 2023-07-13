@@ -15,7 +15,7 @@ class SongPage extends StatefulWidget {
 }
 
 class _SongPageState extends State<SongPage> {
-  int _currentCarouselPage = 0;
+  int currentCarouselPage = 0;
   final Random _random = Random();
   final List<String> artistNames = [
     "Polyphia", 
@@ -59,6 +59,13 @@ class _SongPageState extends State<SongPage> {
     false, 
     false,
   ];
+  List<String> imageList = [
+    "lib/assets/images/ego_death.png",
+    "lib/assets/images/neurotica.png",
+    "lib/assets/images/the_audacity.png",
+    "lib/assets/images/playing_god.png",
+    "lib/assets/images/chimera.png",
+  ];
   List<int> startTimes = [];
   List<double> progressValues = [];
   double adjustableProgressValue = 0.0;
@@ -73,8 +80,8 @@ class _SongPageState extends State<SongPage> {
     super.initState();
     startTimes = List.generate(5, (_) => _random.nextInt(150));
     progressValues = startTimes.map((startTime) => startTime / 300).toList();
-    originalStartValue = startTimes[_currentCarouselPage].toDouble();
-    originalEndValue = endTimes[_currentCarouselPage].toDouble();
+    originalStartValue = startTimes[currentCarouselPage].toDouble();
+    originalEndValue = endTimes[currentCarouselPage].toDouble();
   }
 
   void toggleMenu() {
@@ -100,19 +107,19 @@ class _SongPageState extends State<SongPage> {
 
   void favorite() {
     setState(() {
-      favoriteStatus[_currentCarouselPage] = !favoriteStatus[_currentCarouselPage];
+      favoriteStatus[currentCarouselPage] = !favoriteStatus[currentCarouselPage];
     });
   }
 
   void shuffle() {
     setState(() {
-      shuffleStatus[_currentCarouselPage] = !shuffleStatus[_currentCarouselPage];
+      shuffleStatus[currentCarouselPage] = !shuffleStatus[currentCarouselPage];
     });
   }
 
   void repeat() {
     setState(() {
-      repeatStatus[_currentCarouselPage] = !repeatStatus[_currentCarouselPage];
+      repeatStatus[currentCarouselPage] = !repeatStatus[currentCarouselPage];
     });
   }
 
@@ -198,31 +205,16 @@ class _SongPageState extends State<SongPage> {
                           scrollDirection: Axis.horizontal,
                           onPageChanged: (index, reason) {
                             setState(() {
-                              _currentCarouselPage = index;
+                              currentCarouselPage = index;
                             });
                           },
                         ),
                         items: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(15.0),
-                            child: Image.asset("lib/assets/images/ego_death.png"),
-                          ),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(15.0),
-                            child: Image.asset("lib/assets/images/neurotica.png"),
-                          ),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(15.0),
-                            child: Image.asset("lib/assets/images/the_audacity.png"),
-                          ),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(15.0),
-                            child: Image.asset("lib/assets/images/playing_god.png"),
-                          ),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(15.0),
-                            child: Image.asset("lib/assets/images/chimera.png"),
-                          ),
+                          for(var image in imageList)
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(15.0),
+                              child: Image.asset(image),
+                            ),
                         ],
                       ),
                       Padding(
@@ -235,7 +227,7 @@ class _SongPageState extends State<SongPage> {
                               children: [
                                 // artist name
                                 Text(
-                                  artistNames[_currentCarouselPage],
+                                  artistNames[currentCarouselPage],
                                   style: TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20.0,
@@ -246,7 +238,7 @@ class _SongPageState extends State<SongPage> {
                                 const SizedBox(height: 4.0),
                                 // song name
                                 Text(
-                                  songNames[_currentCarouselPage],
+                                  songNames[currentCarouselPage],
                                   style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 26.0,
@@ -259,8 +251,8 @@ class _SongPageState extends State<SongPage> {
                             InkWell(
                               onTap: favorite,
                               child: Icon(
-                                favoriteStatus[_currentCarouselPage] ? Icons.favorite : Icons.favorite_border_outlined, 
-                                color: favoriteStatus[_currentCarouselPage] ? Colors.red : Colors.grey[700],
+                                favoriteStatus[currentCarouselPage] ? Icons.favorite : Icons.favorite_border_outlined, 
+                                color: favoriteStatus[currentCarouselPage] ? Colors.red : Colors.grey[700],
                                 size: 40.0,
                               ),
                             ),
@@ -278,7 +270,7 @@ class _SongPageState extends State<SongPage> {
                   children: [
                     // start time
                     Text(
-                      formatTime(startTimes[_currentCarouselPage]),
+                      formatTime(startTimes[currentCarouselPage]),
                       style: const TextStyle(
                         fontSize: 25.0,
                         fontFamily: "BigNoodleTitling",
@@ -288,8 +280,8 @@ class _SongPageState extends State<SongPage> {
                     InkWell(
                       onTap: shuffle,
                       child: Icon(
-                        shuffleStatus[_currentCarouselPage] ? Icons.shuffle_on_outlined : Icons.shuffle, 
-                        color: shuffleStatus[_currentCarouselPage] ? Colors.black : Colors.grey[700],
+                        shuffleStatus[currentCarouselPage] ? Icons.shuffle_on_outlined : Icons.shuffle, 
+                        color: shuffleStatus[currentCarouselPage] ? Colors.black : Colors.grey[700],
                         size: 28.0,
                       ),
                     ),
@@ -297,14 +289,14 @@ class _SongPageState extends State<SongPage> {
                     InkWell(
                       onTap: repeat,
                       child: Icon(
-                        repeatStatus[_currentCarouselPage] ? Icons.repeat_on_outlined : Icons.repeat, 
-                        color: repeatStatus[_currentCarouselPage] ? Colors.black : Colors.grey[700],
+                        repeatStatus[currentCarouselPage] ? Icons.repeat_on_outlined : Icons.repeat, 
+                        color: repeatStatus[currentCarouselPage] ? Colors.black : Colors.grey[700],
                         size: 28.0,
                       ),
                     ),
                     // end time
                     Text(
-                      formatTime(endTimes[_currentCarouselPage]),
+                      formatTime(endTimes[currentCarouselPage]),
                       style: const TextStyle(
                         fontSize: 25.0,
                         fontFamily: "BigNoodleTitling",
@@ -335,7 +327,7 @@ class _SongPageState extends State<SongPage> {
                                 adjustableProgressValue + details.delta.dx / context.size!.width
                               ).clamp(0.0, 1.0);
                               adjustableProgressValue = newProgressValue;
-                              progressValues[_currentCarouselPage] = newProgressValue;
+                              progressValues[currentCarouselPage] = newProgressValue;
                             });
                           },
                           child: SliderTheme(
@@ -355,7 +347,7 @@ class _SongPageState extends State<SongPage> {
                               onChanged: (newValue) {
                                 setState(() {
                                   adjustableProgressValue = newValue;
-                                  progressValues[_currentCarouselPage] = newValue;
+                                  progressValues[currentCarouselPage] = newValue;
                                 });
                               },
                               activeColor: Colors.transparent,
