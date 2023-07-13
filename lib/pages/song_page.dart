@@ -4,6 +4,7 @@ import "package:flutter/material.dart";
 import "dart:math";
 
 import "../components/neumorphic_box.dart";
+import '../components/side_menu.dart';
 
 class SongPage extends StatefulWidget {
   const SongPage({super.key});
@@ -62,6 +63,9 @@ class _SongPageState extends State<SongPage> {
   double adjustableProgressValue = 0.0;
   double originalStartValue = 0.0;
   double originalEndValue = 1.0;
+  bool isMenuOpen = false;
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  IconData menuIcon = Icons.menu;
   
   @override
   void initState() {
@@ -70,6 +74,27 @@ class _SongPageState extends State<SongPage> {
     progressValues = startTimes.map((startTime) => startTime / 300).toList();
     originalStartValue = startTimes[_currentCarouselPage].toDouble();
     originalEndValue = endTimes[_currentCarouselPage].toDouble();
+  }
+
+  void toggleMenu() {
+    setState(() {
+      isMenuOpen = !isMenuOpen;
+      menuIcon = isMenuOpen ? Icons.close : Icons.menu;
+    });
+
+    if(isMenuOpen) {
+      scaffoldKey.currentState?.openDrawer();
+    } else {
+      scaffoldKey.currentState?.openEndDrawer();
+    }
+  }
+
+  void onDrawerChanged(bool isOpen) {
+    setState(() {
+      if(!isOpen) {
+        menuIcon = Icons.menu;
+      }
+    });
   }
 
   void favorite() {
@@ -93,25 +118,28 @@ class _SongPageState extends State<SongPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: scaffoldKey,
       backgroundColor: Colors.grey[300],
+      drawer: const SideMenu(),
+      onDrawerChanged: onDrawerChanged,
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 25.0),
           child: Column(
             children: [
               const SizedBox(height: 25.0),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   // back button
-                  SizedBox(
+                  const SizedBox(
                     height: 60.0, 
                     width: 60.0,
                     child: NeumorphicBox(
                       child: Icon(Icons.arrow_back),
                     ),
                   ),
-                  Text(
+                  const Text(
                     "P L A Y L I S T", 
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
@@ -119,11 +147,16 @@ class _SongPageState extends State<SongPage> {
                       fontFamily: "BigNoodleTitling",
                     )),
                   // menu button
-                  SizedBox(
-                    height: 60.0, 
-                    width: 60.0,
-                    child: NeumorphicBox(
-                      child: Icon(Icons.menu),
+                  InkWell(
+                    onTap: toggleMenu,
+                    child: SizedBox(
+                      height: 60.0, 
+                      width: 60.0,
+                      child: NeumorphicBox(
+                        child: Icon(
+                          menuIcon,
+                        ),
+                      ),
                     ),
                   ),
                 ],
