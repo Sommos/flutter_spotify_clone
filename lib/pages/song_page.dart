@@ -145,12 +145,14 @@ class _SongPageState extends State<SongPage> {
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => HomePage()),
+                            MaterialPageRoute(builder: (context) => const HomePage()),
                           );
                         },
-                        child: const NeumorphicBox(
-                          child: Icon(
-                            Icons.arrow_back,
+                        child: Ink(
+                          child: const NeumorphicBox(
+                            child: Icon(
+                              Icons.arrow_back,
+                            ),
                           ),
                         ),
                       ),
