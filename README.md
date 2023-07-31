@@ -18,7 +18,7 @@ This program is to test flutter and dart, testing out a basic Spotify-like UI wi
 
 # Fonts
 
-The font used in this program, Big Noodle Titling, is available here:
+The fonts used in this program, are available here:
 
 https://www.dafont.com/bignoodletitling.font
 
